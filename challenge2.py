@@ -1,22 +1,14 @@
 def solution(A):
-    N = len(A)  # Number of boxes
-    total_bricks = sum(A)  # Total number of bricks across all boxes
-    desired_total = N * 10  # Desired total number of bricks for equal distribution
+    digit_sums = {}
+    max_sum = -1
 
-    # Check if redistribution to exactly 10 bricks per box is possible
-    if total_bricks != desired_total:
-        return -1
+    for num in A:
+        digit_sum = sum(int(digit) for digit in str(num))
+    
+        if digit_sum in digit_sums:
+            max_sum = max(max_sum, num + digit_sums[digit_sum])
+        else:
+            digit_sums[digit_sum] = num
+    return max_sum
 
-    # Calculate the minimum number of moves required for redistribution
-    moves = 0
-    cumulative_diff = 0
-    for bricks in A:
-        # Calculate the difference for the current box
-        diff = bricks - 10
-        cumulative_diff += diff
-        # Accumulate the absolute value of the cumulative difference
-        moves += abs(cumulative_diff)
-    print(moves)
-    return moves
-
-solution([11, 10, 8, 12, 8, 10, 11])
+print(solution([51, 32, 43]))
